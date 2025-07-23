@@ -9,5 +9,4 @@ public class ForksBackendApplication {
   public static void main(String[] args) {
     SpringApplication.run(ForksBackendApplication.class, args);
   }
-
 }
