@@ -3,9 +3,11 @@ package com.svoglimacci.forks_backend.services;
 import com.svoglimacci.forks_backend.dtos.RecipeDTO;
 import com.svoglimacci.forks_backend.entities.RecipeEntity;
 import com.svoglimacci.forks_backend.exceptions.ResourceNotFoundException;
+import com.svoglimacci.forks_backend.mappers.IngredientMapper;
 import com.svoglimacci.forks_backend.mappers.RecipeMapper;
 import com.svoglimacci.forks_backend.repositories.RecipeRepository;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +20,14 @@ public class RecipeService {
     this.recipeRepository = recipeRepository;
   }
 
-  public List<RecipeDTO> getAllRecipes() {
-    return recipeRepository.findAll().stream()
+  public List<RecipeDTO> getAllRecipesByAuthorId(UUID authorId) {
+    List<RecipeEntity> recipes = recipeRepository.findAllByAuthorId(authorId);
+
+    return recipes.stream()
         .map(RecipeMapper::toDTO)
         .collect(Collectors.toList());
   }
+
 
   public RecipeDTO getRecipeById(long id) {
     RecipeEntity recipe =
@@ -44,15 +49,35 @@ public class RecipeService {
         recipeRepository
             .findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Recipe not found with id: " + id));
+    if (!existingRecipe.getAuthor().getId().equals(input.getAuthor().getId())) {
+      throw new ResourceNotFoundException("Recipe not found with id: " + id);
+    }
 
     existingRecipe.setTitle(input.getTitle());
     existingRecipe.setDescription(input.getDescription());
+    existingRecipe.setIngredients(
+        input.getIngredients().stream()
+            .map(IngredientMapper::toModel)
+            .collect(Collectors.toSet()));
+
+
 
     RecipeEntity updatedRecipe = recipeRepository.save(existingRecipe);
     return RecipeMapper.toDTO(updatedRecipe);
   }
 
-  public void deleteRecipe(long id) {
+  public void deleteRecipe(long id, UUID uuid) {
+
+    RecipeEntity recipe =
+        recipeRepository
+            .findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Recipe not found with id: " + id));
+    if (!recipe.getAuthor().getId().equals(uuid)) {
+      throw new ResourceNotFoundException("Recipe not found with id: " + id);
+    }
+
+
     recipeRepository.deleteById(id);
   }
 }
+
