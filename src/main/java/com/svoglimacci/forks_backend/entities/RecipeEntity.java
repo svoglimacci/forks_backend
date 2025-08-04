@@ -30,13 +30,17 @@ public class RecipeEntity {
   @JoinTable(
       name = "recipe_ingredient",
       joinColumns = @JoinColumn(name = "recipe_id"),
-      inverseJoinColumns = @JoinColumn(name = "ingredient_id")
-  )
+      inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
   private Set<IngredientEntity> ingredients = new HashSet<>();
 
   public RecipeEntity() {}
 
-  public RecipeEntity(long id, String title, String description, Set<IngredientEntity> ingredients, UserEntity author) {
+  public RecipeEntity(
+      long id,
+      String title,
+      String description,
+      Set<IngredientEntity> ingredients,
+      UserEntity author) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -83,5 +87,4 @@ public class RecipeEntity {
   public void setIngredients(Set<IngredientEntity> ingredients) {
     this.ingredients = ingredients;
   }
-
 }

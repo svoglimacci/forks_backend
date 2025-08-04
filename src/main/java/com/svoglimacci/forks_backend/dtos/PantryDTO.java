@@ -39,7 +39,4 @@ public class PantryDTO {
   public void setIngredients(Set<IngredientDTO> ingredients) {
     this.ingredients = ingredients;
   }
-
-
-
 }

@@ -25,7 +25,4 @@ public class PantryMapper {
             .collect(java.util.stream.Collectors.toSet()));
     return pantryEntity;
   }
-
-
-
 }

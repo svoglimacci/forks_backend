@@ -13,9 +13,7 @@ public class RecipeMapper {
     recipeDTO.setAuthor(UserMapper.toDTO(recipe.getAuthor()));
 
     recipeDTO.setIngredients(
-        recipe.getIngredients().stream()
-            .map(IngredientMapper::toDTO)
-            .collect(Collectors.toSet()));
+        recipe.getIngredients().stream().map(IngredientMapper::toDTO).collect(Collectors.toSet()));
 
     return recipeDTO;
   }
@@ -34,5 +32,4 @@ public class RecipeMapper {
 
     return recipe;
   }
-
 }

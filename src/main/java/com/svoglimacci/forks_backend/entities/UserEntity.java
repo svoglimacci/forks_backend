@@ -2,24 +2,19 @@ package com.svoglimacci.forks_backend.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 public class UserEntity {
 
-  @Id
-  private UUID id;
+  @Id private UUID id;
   private String email;
 
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -68,5 +63,4 @@ public class UserEntity {
   public void setRecipes(List<RecipeEntity> recipes) {
     this.recipes = recipes;
   }
-
 }

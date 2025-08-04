@@ -23,7 +23,9 @@ public class IngredientController {
 
   private final IngredientService ingredientService;
 
-  public IngredientController(IngredientService ingredientService) { this.ingredientService = ingredientService; }
+  public IngredientController(IngredientService ingredientService) {
+    this.ingredientService = ingredientService;
+  }
 
   @GetMapping
   @Operation(summary = "Get all ingredients", description = "Returns a list of all ingredients")
@@ -54,7 +56,8 @@ public class IngredientController {
   @Operation(
       summary = "Update an existing ingredient",
       description = "Updates an existing ingredient by its ID and returns the updated ingredient")
-  public ResponseEntity<IngredientDTO> updateIngredient(@PathVariable long ingredient_id, @RequestBody IngredientDTO input) {
+  public ResponseEntity<IngredientDTO> updateIngredient(
+      @PathVariable long ingredient_id, @RequestBody IngredientDTO input) {
     IngredientDTO updatedIngredient = ingredientService.updateIngredient(ingredient_id, input);
     return ResponseEntity.ok().body(updatedIngredient);
   }
@@ -67,6 +70,4 @@ public class IngredientController {
     ingredientService.deleteIngredient(ingredient_id);
     return ResponseEntity.ok().body(Map.of("message", "Ingredient deleted successfully"));
   }
-
-
 }

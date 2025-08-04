@@ -10,5 +10,4 @@ import org.springframework.stereotype.Repository;
 public interface PantryRepository extends JpaRepository<PantryEntity, Long> {
 
   Optional<PantryEntity> findByUserId(UUID userId);
-
 }

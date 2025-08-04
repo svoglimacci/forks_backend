@@ -21,22 +21,23 @@ public class PantryService {
 
   public PantryDTO getPantryByUserId(UUID userId) {
 
-    PantryEntity pantry = pantryRepository.findByUserId(userId)
-        .orElseThrow(() -> new ResourceNotFoundException("Pantry not found for user: " + userId));
+    PantryEntity pantry =
+        pantryRepository
+            .findByUserId(userId)
+            .orElseThrow(
+                () -> new ResourceNotFoundException("Pantry not found for user: " + userId));
 
     return PantryMapper.toDTO(pantry);
   }
 
-
   public PantryDTO updatePantry(UUID uuid, PantryDTO input) {
-    PantryEntity existingPantry = pantryRepository.findByUserId(uuid)
-        .orElseThrow(() -> new ResourceNotFoundException("Pantry not found for user: " + uuid));
+    PantryEntity existingPantry =
+        pantryRepository
+            .findByUserId(uuid)
+            .orElseThrow(() -> new ResourceNotFoundException("Pantry not found for user: " + uuid));
 
     existingPantry.setIngredients(
-        input.getIngredients().stream()
-            .map(IngredientMapper::toModel)
-            .collect(Collectors.toSet())
-    );
+        input.getIngredients().stream().map(IngredientMapper::toModel).collect(Collectors.toSet()));
 
     PantryEntity updatedPantry = pantryRepository.save(existingPantry);
     return PantryMapper.toDTO(updatedPantry);

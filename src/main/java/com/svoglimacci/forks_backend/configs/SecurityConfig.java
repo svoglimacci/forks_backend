@@ -11,22 +11,24 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-
 @Configuration
 public class SecurityConfig {
   @Bean
-  SecurityFilterChain configureSecurityFilterChain(HttpSecurity http) throws Exception
-  {
-    http
-
-        .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-            .requestMatchers("/v3/api-docs/**").permitAll()
-        .requestMatchers("/**").authenticated()
-.anyRequest().authenticated())
-.oauth2ResourceServer(it -> it.jwt(Customizer.withDefaults()))
+  SecurityFilterChain configureSecurityFilterChain(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests(
+            authorizeRequests ->
+                authorizeRequests
+                    .requestMatchers(HttpMethod.OPTIONS, "/**")
+                    .permitAll()
+                    .requestMatchers("/v3/api-docs/**")
+                    .permitAll()
+                    .requestMatchers("/**")
+                    .authenticated()
+                    .anyRequest()
+                    .authenticated())
+        .oauth2ResourceServer(it -> it.jwt(Customizer.withDefaults()))
         .cors(cors -> cors.configurationSource(corsConfigurationSource()));
-    
+
     return http.build();
   }
 

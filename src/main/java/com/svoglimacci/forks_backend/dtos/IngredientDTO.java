@@ -27,5 +27,4 @@ public class IngredientDTO {
   public void setName(String name) {
     this.name = name;
   }
-
 }

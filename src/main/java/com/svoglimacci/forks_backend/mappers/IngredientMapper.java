@@ -17,5 +17,4 @@ public class IngredientMapper {
     ingredient.setName(ingredientDTO.getName());
     return ingredient;
   }
-
 }

@@ -18,20 +18,18 @@ public class IngredientService {
   }
 
   public List<IngredientDTO> getAllIngredients() {
-    return ingredientRepository.findAll().stream()
-        .map(IngredientMapper::toDTO)
-        .toList();
+    return ingredientRepository.findAll().stream().map(IngredientMapper::toDTO).toList();
   }
 
   public IngredientDTO getIngredientById(long id) {
     IngredientEntity ingredient =
         ingredientRepository
             .findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Ingredient not found with id: " + id));
+            .orElseThrow(
+                () -> new ResourceNotFoundException("Ingredient not found with id: " + id));
 
     return IngredientMapper.toDTO(ingredient);
-}
-
+  }
 
   public IngredientDTO createIngredient(IngredientDTO input) {
     IngredientEntity ingredient = IngredientMapper.toModel(input);
@@ -43,7 +41,8 @@ public class IngredientService {
     IngredientEntity existingIngredient =
         ingredientRepository
             .findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Ingredient not found with id: " + id));
+            .orElseThrow(
+                () -> new ResourceNotFoundException("Ingredient not found with id: " + id));
 
     existingIngredient.setName(input.getName());
 
@@ -54,5 +53,4 @@ public class IngredientService {
   public void deleteIngredient(long id) {
     ingredientRepository.deleteById(id);
   }
-
 }

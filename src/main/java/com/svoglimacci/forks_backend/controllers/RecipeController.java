@@ -30,13 +30,13 @@ public class RecipeController {
     this.recipeService = recipeService;
   }
 
-
-
   @GetMapping
-  @Operation(summary = "Get all recipes by author ID",
+  @Operation(
+      summary = "Get all recipes by author ID",
       description = "Returns a list of all recipes created by the authenticated user")
   public ResponseEntity<List<RecipeDTO>> getAllRecipesByAuthorId(@AuthenticationPrincipal Jwt jwt) {
-    List<RecipeDTO> recipes = recipeService.getAllRecipesByAuthorId(UUID.fromString(jwt.getSubject()));
+    List<RecipeDTO> recipes =
+        recipeService.getAllRecipesByAuthorId(UUID.fromString(jwt.getSubject()));
     return ResponseEntity.ok().body(recipes);
   }
 
@@ -53,16 +53,12 @@ public class RecipeController {
   @Operation(
       summary = "Create a new recipe",
       description = "Creates a new recipe and returns the created recipe")
-  public ResponseEntity<RecipeDTO> createRecipe(@RequestBody RecipeDTO input,
-                                                @AuthenticationPrincipal Jwt jwt) {
-    input.setAuthor(new UserDTO(
-        UUID.fromString(jwt.getSubject()),
-        jwt.getClaimAsString("email")
-    ));
+  public ResponseEntity<RecipeDTO> createRecipe(
+      @RequestBody RecipeDTO input, @AuthenticationPrincipal Jwt jwt) {
+    input.setAuthor(new UserDTO(UUID.fromString(jwt.getSubject()), jwt.getClaimAsString("email")));
 
     RecipeDTO createdRecipe = recipeService.createRecipe(input);
-    return ResponseEntity.created(
-        java.net.URI.create("/recipes/" + createdRecipe.getId()))
+    return ResponseEntity.created(java.net.URI.create("/recipes/" + createdRecipe.getId()))
         .body(createdRecipe);
   }
 
@@ -80,10 +76,9 @@ public class RecipeController {
       summary = "Delete a recipe",
       description = "Deletes a recipe by its ID and returns a success message")
   @DeleteMapping("/{recipe_id}")
-  public ResponseEntity<String> deleteRecipe(@PathVariable Long recipe_id,
-                                             @AuthenticationPrincipal Jwt jwt)  {
+  public ResponseEntity<String> deleteRecipe(
+      @PathVariable Long recipe_id, @AuthenticationPrincipal Jwt jwt) {
     recipeService.deleteRecipe(recipe_id, UUID.fromString(jwt.getSubject()));
     return ResponseEntity.ok().body("Recipe deleted successfully");
   }
 }
-

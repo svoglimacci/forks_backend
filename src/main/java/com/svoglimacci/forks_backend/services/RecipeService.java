@@ -23,11 +23,8 @@ public class RecipeService {
   public List<RecipeDTO> getAllRecipesByAuthorId(UUID authorId) {
     List<RecipeEntity> recipes = recipeRepository.findAllByAuthorId(authorId);
 
-    return recipes.stream()
-        .map(RecipeMapper::toDTO)
-        .collect(Collectors.toList());
+    return recipes.stream().map(RecipeMapper::toDTO).collect(Collectors.toList());
   }
-
 
   public RecipeDTO getRecipeById(long id) {
     RecipeEntity recipe =
@@ -56,11 +53,7 @@ public class RecipeService {
     existingRecipe.setTitle(input.getTitle());
     existingRecipe.setDescription(input.getDescription());
     existingRecipe.setIngredients(
-        input.getIngredients().stream()
-            .map(IngredientMapper::toModel)
-            .collect(Collectors.toSet()));
-
-
+        input.getIngredients().stream().map(IngredientMapper::toModel).collect(Collectors.toSet()));
 
     RecipeEntity updatedRecipe = recipeRepository.save(existingRecipe);
     return RecipeMapper.toDTO(updatedRecipe);
@@ -76,8 +69,6 @@ public class RecipeService {
       throw new ResourceNotFoundException("Recipe not found with id: " + id);
     }
 
-
     recipeRepository.deleteById(id);
   }
 }
-

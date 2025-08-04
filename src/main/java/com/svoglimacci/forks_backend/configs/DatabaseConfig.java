@@ -15,7 +15,8 @@ public class DatabaseConfig {
 
   @Bean
   @Primary
-  public DataSource backendDataSource(@Value("${app.datasource.backend.url}") String url,
+  public DataSource backendDataSource(
+      @Value("${app.datasource.backend.url}") String url,
       @Value("${app.datasource.backend.username}") String username,
       @Value("${app.datasource.backend.password}") String password) {
     HikariConfig config = new HikariConfig();
@@ -26,7 +27,8 @@ public class DatabaseConfig {
   }
 
   @Bean
-  public DataSource keycloakDataSource(@Value("${app.datasource.keycloak.url}") String url,
+  public DataSource keycloakDataSource(
+      @Value("${app.datasource.keycloak.url}") String url,
       @Value("${app.datasource.keycloak.username}") String username,
       @Value("${app.datasource.keycloak.password}") String password) {
     HikariConfig config = new HikariConfig();
@@ -40,10 +42,6 @@ public class DatabaseConfig {
   @Bean
   @Primary
   public Flyway backendFlyway(@Qualifier("backendDataSource") DataSource dataSource) {
-    return Flyway.configure()
-        .dataSource(dataSource)
-        .locations("classpath:db/migration")
-        .load();
+    return Flyway.configure().dataSource(dataSource).locations("classpath:db/migration").load();
   }
-
 }

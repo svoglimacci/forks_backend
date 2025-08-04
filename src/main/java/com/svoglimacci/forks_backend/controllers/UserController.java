@@ -1,14 +1,7 @@
 package com.svoglimacci.forks_backend.controllers;
 
-import com.svoglimacci.forks_backend.dtos.IngredientDTO;
-import com.svoglimacci.forks_backend.dtos.RecipeDTO;
 import com.svoglimacci.forks_backend.dtos.UserDTO;
-import com.svoglimacci.forks_backend.entities.UserEntity;
 import com.svoglimacci.forks_backend.services.UserService;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,15 +30,12 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<UserDTO> createUser(@AuthenticationPrincipal Jwt jwt, @RequestBody UserDTO input) {
+  public ResponseEntity<UserDTO> createUser(
+      @AuthenticationPrincipal Jwt jwt, @RequestBody UserDTO input) {
     input.setEmail(jwt.getClaimAsString("email"));
     input.setId(UUID.fromString(jwt.getSubject()));
     UserDTO createdUser = userService.createUser(input);
 
     return ResponseEntity.ok().body(createdUser);
-    }
-
-
   }
-
-
+}

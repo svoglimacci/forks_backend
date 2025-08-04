@@ -26,7 +26,8 @@ public class IngredientEntity {
   @ManyToMany(mappedBy = "ingredients")
   private Set<PantryEntity> pantries = new HashSet<>();
 
-  public IngredientEntity(long id, String name, List<RecipeEntity> recipes, Set<PantryEntity> pantries) {
+  public IngredientEntity(
+      long id, String name, List<RecipeEntity> recipes, Set<PantryEntity> pantries) {
     this.id = id;
     this.name = name;
     this.recipes = recipes;
@@ -66,6 +67,4 @@ public class IngredientEntity {
   }
 
   public IngredientEntity() {}
-
-
 }

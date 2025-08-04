@@ -2,7 +2,6 @@ package com.svoglimacci.forks_backend.mappers;
 
 import com.svoglimacci.forks_backend.dtos.UserDTO;
 import com.svoglimacci.forks_backend.entities.UserEntity;
-import java.util.stream.Collectors;
 
 public class UserMapper {
   public static UserDTO toDTO(UserEntity user) {

@@ -6,8 +6,8 @@ public class RecipeDTO {
 
   public RecipeDTO() {}
 
-
-  public RecipeDTO(long id, String title, String description, UserDTO author, Set<IngredientDTO> ingredients) {
+  public RecipeDTO(
+      long id, String title, String description, UserDTO author, Set<IngredientDTO> ingredients) {
     this.id = id;
     this.title = title;
     this.description = description;
